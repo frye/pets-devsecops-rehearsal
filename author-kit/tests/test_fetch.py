@@ -44,11 +44,11 @@ class FetchRouteTests(unittest.TestCase):
         unrelated = subprocess.run(["git", "-C", str(repo), "merge-base", "HEAD", "FETCH_HEAD"],
                                    env=test_helper.ENV, capture_output=True)
         self.assertEqual(unrelated.returncode, 1)
-        subprocess.run([test_helper.BASH, str(extracted / "scripts/prepare-devsecops.sh"),
-                        "--repo", str(repo), "--check"], env=test_helper.ENV,
+        subprocess.run([test_helper.BASH, (extracted / "scripts/prepare-devsecops.sh").as_posix(),
+                        "--repo", repo.as_posix(), "--check"], env=test_helper.ENV,
                        check=True, capture_output=True)
-        subprocess.run([test_helper.BASH, str(extracted / "scripts/prepare-devsecops.sh"),
-                        "--repo", str(repo), "--apply"], env=test_helper.ENV,
+        subprocess.run([test_helper.BASH, (extracted / "scripts/prepare-devsecops.sh").as_posix(),
+                        "--repo", repo.as_posix(), "--apply"], env=test_helper.ENV,
                        check=True, capture_output=True)
         self.assertEqual(git(repo, "rev-parse", "HEAD"), original_head)
         self.assertEqual(git(repo, "remote", "-v"), original_remotes)
@@ -62,8 +62,8 @@ class FetchRouteTests(unittest.TestCase):
         (copy / "baseline.sha256").write_text("")
         before = test_helper.snapshot(self.fixture.repo)
         result = subprocess.run(
-            [test_helper.BASH, str(copy / "scripts/prepare-devsecops.sh"), "--repo",
-             str(self.fixture.repo), "--apply"], env=test_helper.ENV, capture_output=True)
+            [test_helper.BASH, (copy / "scripts/prepare-devsecops.sh").as_posix(), "--repo",
+             self.fixture.repo.as_posix(), "--apply"], env=test_helper.ENV, capture_output=True)
         self.assertNotEqual(result.returncode, 0)
         self.assertEqual(before, test_helper.snapshot(self.fixture.repo))
 

@@ -35,9 +35,8 @@ jobs:
         shell: bash
         env:
           PETS_SOURCE_REPO: ${{ github.workspace }}/baseline
+          WORKSHOP_BASH: ${{ runner.os == 'Windows' && 'C:\Program Files\Git\bin\bash.exe' || 'bash' }}
         run: |
-          if [[ "$OSTYPE" == msys* ]]; then
-            export WORKSHOP_BASH="$(cygpath -w "$BASH")"
-          fi
+          python -c "import os; print('Author test Bash:', os.environ['WORKSHOP_BASH'])"
           python -m unittest discover -s author-kit/tests -p test_helper.py -v
           python -m unittest discover -s author-kit/tests -p test_fetch.py -v

@@ -47,8 +47,8 @@ class HelperTests(unittest.TestCase):
 
     def run_helper(self, mode="--apply", ok=True, extra=()):
         before = snapshot(self.repo)
-        result = subprocess.run([BASH, str(KIT / "scripts/prepare-devsecops.sh"),
-                                 "--repo", str(self.repo), mode, *extra],
+        result = subprocess.run([BASH, (KIT / "scripts/prepare-devsecops.sh").as_posix(),
+                                 "--repo", self.repo.as_posix(), mode, *extra],
                                 env=ENV, capture_output=True, text=True)
         self.assertEqual(result.returncode == 0, ok, result.stdout + result.stderr)
         if not ok or mode == "--check":
@@ -200,8 +200,8 @@ class HelperTests(unittest.TestCase):
 
     def test_nested_path_and_non_repository(self):
         for target in (self.repo / "app", self.root):
-            result = subprocess.run([BASH, str(KIT / "scripts/prepare-devsecops.sh"),
-                                     "--repo", str(target), "--check"],
+            result = subprocess.run([BASH, (KIT / "scripts/prepare-devsecops.sh").as_posix(),
+                                     "--repo", target.as_posix(), "--check"],
                                     env=ENV, capture_output=True, text=True)
             self.assertNotEqual(result.returncode, 0)
 
