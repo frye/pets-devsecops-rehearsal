@@ -34,7 +34,7 @@ class FetchRouteTests(unittest.TestCase):
         extracted = root / "pets-devsecops-kit-v0.1.0"
         extracted.mkdir()
         git(repo, "archive", "--format=tar", "--output=" + str(archive), "FETCH_HEAD")
-        subprocess.run(["tar", "-xf", str(archive), "-C", str(extracted)], check=True)
+        subprocess.run(["tar", "-xf", archive.name, "-C", extracted.name], cwd=root, check=True)
         self.assertTrue((extracted / "starter/ci.yml").exists())
         self.assertTrue((extracted / "take-home/2-approve-a-release.md").exists())
         self.assertFalse((extracted / "content/devsecops").exists())

@@ -29,8 +29,8 @@ jobs:
       - name: Extract kit like the learner fetch route
         shell: bash
         run: |
-          git -C rehearsal-source archive --format=tar --output="$RUNNER_TEMP/author-kit.tar" HEAD author-kit
-          tar -xf "$RUNNER_TEMP/author-kit.tar"
+          git -C rehearsal-source archive --format=tar --output=../author-kit.tar HEAD author-kit
+          tar -xf author-kit.tar
       - name: Exercise helper and independent-history fetch route
         shell: bash
         env:
