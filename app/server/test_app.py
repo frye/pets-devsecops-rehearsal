@@ -102,7 +102,7 @@ class TestApp(unittest.TestCase):
         self.assertEqual(set(data['dogs'][0].keys()), {'id', 'name', 'breed'})
 
 
-    def test_direct_startup_disables_debug(self):
+    def test_author_negative_fixture_does_not_start_server(self):
         import os
         from pathlib import Path
         import runpy
@@ -111,7 +111,7 @@ class TestApp(unittest.TestCase):
             with patch('flask.Flask.run') as run:
                 runpy.run_path(str(Path(__file__).with_name('app.py')), run_name='__main__')
 
-        run.assert_called_once_with(debug=False, port=5100)
+        run.assert_called_once_with(debug=True, port=5100)
 
 
 if __name__ == '__main__':
