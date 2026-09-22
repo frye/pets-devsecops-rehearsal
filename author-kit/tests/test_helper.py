@@ -13,6 +13,7 @@ SOURCE = Path(os.environ.get("PETS_SOURCE_REPO", KIT.parents[1]))
 MANIFEST = json.loads((KIT / "workshop-kit.json").read_text())
 ENV = dict(os.environ, GIT_CONFIG_NOSYSTEM="1", GIT_CONFIG_GLOBAL=os.devnull,
            GIT_TERMINAL_PROMPT="0", GIT_OPTIONAL_LOCKS="0")
+BASH = os.environ.get("WORKSHOP_BASH", "bash")
 
 
 def git(repo, *args):
@@ -46,7 +47,7 @@ class HelperTests(unittest.TestCase):
 
     def run_helper(self, mode="--apply", ok=True, extra=()):
         before = snapshot(self.repo)
-        result = subprocess.run(["bash", str(KIT / "scripts/prepare-devsecops.sh"),
+        result = subprocess.run([BASH, str(KIT / "scripts/prepare-devsecops.sh"),
                                  "--repo", str(self.repo), mode, *extra],
                                 env=ENV, capture_output=True, text=True)
         self.assertEqual(result.returncode == 0, ok, result.stdout + result.stderr)
@@ -199,7 +200,7 @@ class HelperTests(unittest.TestCase):
 
     def test_nested_path_and_non_repository(self):
         for target in (self.repo / "app", self.root):
-            result = subprocess.run(["bash", str(KIT / "scripts/prepare-devsecops.sh"),
+            result = subprocess.run([BASH, str(KIT / "scripts/prepare-devsecops.sh"),
                                      "--repo", str(target), "--check"],
                                     env=ENV, capture_output=True, text=True)
             self.assertNotEqual(result.returncode, 0)

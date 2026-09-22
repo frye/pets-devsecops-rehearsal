@@ -36,5 +36,8 @@ jobs:
         env:
           PETS_SOURCE_REPO: ${{ github.workspace }}/baseline
         run: |
+          if [[ "$OSTYPE" == msys* ]]; then
+            export WORKSHOP_BASH="$(cygpath -w "$BASH")"
+          fi
           python -m unittest discover -s author-kit/tests -p test_helper.py -v
           python -m unittest discover -s author-kit/tests -p test_fetch.py -v
