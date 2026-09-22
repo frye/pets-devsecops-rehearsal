@@ -1,4 +1,3 @@
-from pathlib import Path
 import shutil
 import subprocess
 import unittest
@@ -44,12 +43,12 @@ class FetchRouteTests(unittest.TestCase):
         unrelated = subprocess.run(["git", "-C", str(repo), "merge-base", "HEAD", "FETCH_HEAD"],
                                    env=test_helper.ENV, capture_output=True)
         self.assertEqual(unrelated.returncode, 1)
-        subprocess.run([test_helper.BASH, (extracted / "scripts/prepare-devsecops.sh").as_posix(),
-                        "--repo", repo.as_posix(), "--check"], env=test_helper.ENV,
-                       check=True, capture_output=True)
-        subprocess.run([test_helper.BASH, (extracted / "scripts/prepare-devsecops.sh").as_posix(),
-                        "--repo", repo.as_posix(), "--apply"], env=test_helper.ENV,
-                       check=True, capture_output=True)
+        for mode in ("--check", "--apply"):
+            result = subprocess.run(
+                [test_helper.BASH, (extracted / "scripts/prepare-devsecops.sh").as_posix(),
+                 "--repo", repo.as_posix(), mode], env=test_helper.ENV,
+                capture_output=True, text=True)
+            self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
         self.assertEqual(git(repo, "rev-parse", "HEAD"), original_head)
         self.assertEqual(git(repo, "remote", "-v"), original_remotes)
         self.assertEqual(
