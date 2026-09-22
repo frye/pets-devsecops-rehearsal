@@ -1,0 +1,76 @@
+{
+  "version": "0.1.0",
+  "status": "prerelease-human-and-browser-rehearsal-pending",
+  "source_repository": "github-samples/pets-workshop",
+  "source_commit": "d2437a6f3dbb1fe4bd5e97790ccc12c42cbfc03a",
+  "reviewed_utc": "2026-09-22",
+  "publication": {
+    "repository": "frye/pets-devsecops-workshop",
+    "tag": "v0.1.0",
+    "release": "https://github.com/frye/pets-devsecops-workshop/releases/tag/v0.1.0"
+  },
+  "core_workflows": [
+    "ci.yml",
+    "dependency-review.yml"
+  ],
+  "checks": [
+    "api-tests",
+    "client-build",
+    "dependency-review"
+  ],
+  "baseline_paths": [
+    "app/client/package.json",
+    "app/client/package-lock.json",
+    "app/server/app.py",
+    "app/server/test_app.py",
+    "app/server/requirements.txt",
+    "app/server/models/__init__.py",
+    "app/server/models/base.py",
+    "app/server/models/breed.py",
+    "app/server/models/dog.py"
+  ],
+  "live_gates": {
+    "codeql_baseline_and_fix": "observed-cli-api",
+    "dependency_discovery_fail_fix": "observed-cli-api",
+    "secret_fixture_safety_and_both_routes": "official-inactive-source-terminal-observed-browser-pending",
+    "merge_policy": "observed-cli-api",
+    "release_approval_and_receipt": "observed-cli-api-with-approved-receipt-and-non-main-rejection",
+    "step0_both_routes": "unverified",
+    "take_home_independent_reader": "unverified",
+    "learner_timing": "unverified"
+  },
+  "fingerprints": {
+    "app/client/package.json": "66fd5b8dbb93119d9f6d0667773e953e669d0b841aa1f6e0f12bb2068ce85a0d",
+    "app/client/package-lock.json": "f3f0e646ec3e4286ee8a494580a9218aac9d244f32b17eb26bfe59f51809e1cd",
+    "app/server/app.py": "dbba8342a0271844dda4a6b8921bc4b194e418242025ab18651d99b528fca542",
+    "app/server/test_app.py": "97a418915b5423ed968bdc84f9d83f90c77943d647561b95bb6d87aaf3e7e276",
+    "app/server/requirements.txt": "fa6ce152b061f65c31eae1d7307dfe3a5bf78a2ce20030cd9e8d5f31284bbdac",
+    "app/server/models/__init__.py": "d535452846fa28704ddc106a32d26d71b73752308f40f4c48aa902d9112636f6",
+    "app/server/models/base.py": "dc7b5af542673c236dc44cbf6016db01c1cbb49c327668af7fd16f772029d026",
+    "app/server/models/breed.py": "a567fec3fa86a0dcac3dad6aa66a151da471ddd142338ff73fa11fdc1323bb39",
+    "app/server/models/dog.py": "548e1d3988a00535141d4bb54bfb4ce3d8596414c79959276ea12ff16a0587d7"
+  },
+  "inventory": {
+    "0-setup.md": "a7895154353ed2e9a4c3c0a019160cea96d3fa44fdfe997d37bf26f895f8ac28",
+    "1-devops-baseline.md": "a3345d3f439c07658154e291aee5b14175fd60132a68abf686fd4ecbc2a91fa3",
+    "2-security-planning.md": "2d13f2d99a2e4c02feb61cc63eee4660f097ea745ab1e7b33f275b74e93769cc",
+    "3-code-scanning.md": "3f64fd4b1f456b800283e2adb807e17283ddd15ba38f48ae99fb72d249616913",
+    "4-dependencies.md": "e689e59634dd26323d72c6e8e5ecf6cc73a8741a18ac029ca0b10f5222487194",
+    "5-secrets.md": "56c938b94d89ca86c4e2fc9ae6c88b1b2af83aba9048ed90bf038c282631960a",
+    "6-merge-policy.md": "52ddbc1760b809a407d9776cb546638f96dbbbc85b2f68c3c73ea5497f39341a",
+    "7-delivery-and-response.md": "5b16926c9a6ccb34f82f88075d27a69b21f4ab975b31e6416a3f05cea5b5a595",
+    "8-wrap-up.md": "ca47f5112da7fb4dadb87b8fe173667fc4f0a49bd5bdc9ceedf3e8c6437542b0",
+    "README.md": "ea055322e42491b2eaf59856c28781cf9bce506ae17b618a9d00de9e6078fcc6",
+    "SOURCE-LICENSE": "2510b446bc1f0cf9702453075d20cd88631e20e5642658edb7325d9c1eb534f7",
+    "baseline.sha256": "6ed0e65e27c15ce68299adce3647182a0a9d8b9deecbc5c31414d8b84f9c7a37",
+    "fixtures/dependency-after.txt": "2e42353827f19eaaaad185f84d86a2288d1b3b6a89f616a5bac62760774519e5",
+    "fixtures/dependency-before.txt": "c0cd524d2858bf84afd04e4de3a0001ec4f898fcf6186b32b31566afba1f6918",
+    "scripts/build-kit.py": "3a0269acb192f60b940591e575afce6705e5698f0d6846ed91972d428885fbe3",
+    "scripts/prepare-devsecops.sh": "c066885d600ae34603b224ce0b6b04cfbafd75f7e4b52ea2d91a21b8f7f1bef8",
+    "solutions/dependabot.yml": "a1f847e73b55ea6cd05c284b90d7fa20f352d4345d818847bec90de85da92490",
+    "solutions/startup-test.py.txt": "c4ae05fb3e63450ed99905ba6813cc3df32a8ef3c827b5381385b6d71ada8dec",
+    "starter/ci.yml": "aad87cbcc1d311c7ed32c651de87c616722091d4d7d7403d7f40b9f6d5ce90fd",
+    "starter/dependency-review.yml": "5e09e2ec56e0ba7914e7d4fc3870a0024cecd4bdf28229c6a4c2028d941fef18",
+    "starter/release-simulation.yml": "263b071e348f4cd78036a94d91ad5a978eb5b1ba51c7891ed06b0e683a9da1c3"
+  }
+}
