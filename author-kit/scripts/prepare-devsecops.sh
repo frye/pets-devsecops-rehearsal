@@ -85,6 +85,7 @@ hash_file() {
 [[ -f "$kit/baseline.sha256" ]] || fail "The kit is incomplete: baseline.sha256 is missing."
 fingerprint_count=0
 while read -r expected path; do
+    path=${path%$'\r'}
     [[ "$expected" =~ ^[0-9a-f]{64}$ && "$path" == app/* && "$path" != *..* ]] ||
         fail "Malformed baseline fingerprint."
     [[ -f "$repo/$path" && ! -L "$repo/$path" ]] || fail "Missing or linked baseline file: $path"

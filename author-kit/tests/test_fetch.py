@@ -67,6 +67,29 @@ class FetchRouteTests(unittest.TestCase):
         self.assertNotEqual(result.returncode, 0)
         self.assertEqual(before, test_helper.snapshot(self.fixture.repo))
 
+    def test_crlf_fingerprint_manifest_preserves_validation(self):
+        copy = self.fixture.root / "crlf-kit"
+        shutil.copytree(test_helper.KIT, copy, ignore=shutil.ignore_patterns("__pycache__"))
+        fingerprints = copy / "baseline.sha256"
+        fingerprints.write_bytes(fingerprints.read_bytes().replace(b"\r\n", b"\n")
+                                 .replace(b"\n", b"\r\n"))
+        command = [test_helper.BASH, (copy / "scripts/prepare-devsecops.sh").as_posix(),
+                   "--repo", self.fixture.repo.as_posix()]
+        before = test_helper.snapshot(self.fixture.repo)
+        check = subprocess.run(command + ["--check"], env=test_helper.ENV,
+                               capture_output=True, text=True)
+        self.assertEqual(check.returncode, 0, check.stdout + check.stderr)
+        self.assertEqual(before, test_helper.snapshot(self.fixture.repo))
+        applied = subprocess.run(command + ["--apply"], env=test_helper.ENV,
+                                 capture_output=True, text=True)
+        self.assertEqual(applied.returncode, 0, applied.stdout + applied.stderr)
+        path = self.fixture.repo / "app/client/package.json"
+        path.write_bytes(path.read_bytes() + b"\n")
+        changed = test_helper.snapshot(self.fixture.repo)
+        rejected = subprocess.run(command + ["--apply"], env=test_helper.ENV, capture_output=True)
+        self.assertNotEqual(rejected.returncode, 0)
+        self.assertEqual(changed, test_helper.snapshot(self.fixture.repo))
+
 
 if __name__ == "__main__":
     unittest.main()

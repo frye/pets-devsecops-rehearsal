@@ -38,5 +38,6 @@ jobs:
           WORKSHOP_BASH: ${{ runner.os == 'Windows' && 'C:\Program Files\Git\bin\bash.exe' || 'bash' }}
         run: |
           python -c "import os; print('Author test Bash:', os.environ['WORKSHOP_BASH'])"
+          python -c "from pathlib import Path; data = Path('author-kit/baseline.sha256').read_bytes(); print('Runtime fingerprint CRLF lines:', data.count(b'\r\n'))"
           python -m unittest discover -s author-kit/tests -p test_helper.py -v
           python -m unittest discover -s author-kit/tests -p test_fetch.py -v
